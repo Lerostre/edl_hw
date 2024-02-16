@@ -1,0 +1,16 @@
+stages:
+  prepare_data:
+    cmd: python prepare_data.py
+    deps:
+    - prepare_data.py
+    outs:
+    - cifar10
+  main:
+    cmd: python main.py
+    deps:
+    - cifar10
+    - config.yaml
+    - main.py
+    outs:
+    - samples
+    - model.pt

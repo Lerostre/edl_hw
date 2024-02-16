@@ -1,0 +1,32 @@
+model:
+    unet:
+        in_channels: 3
+        out_channels: 3
+        hidden_size: 128
+    betas: [1e-4, 0.02]
+    num_timesteps: 1000
+train:
+    random_seed: 69
+    num_epochs: 100
+    device: cuda
+    subset_size: 1.0
+    augmentation:
+        _target_: torchvision.transforms.Compose
+        transforms:
+            - _target_: torchvision.transforms.ToTensor
+            - _target_: torchvision.transforms.Normalize
+              mean: [0.5, 0.5, 0.5]
+              std: [0.5, 0.5, 0.5]
+            - _target_: torchvision.transforms.RandomHorizontalFlip
+              p: 0.5
+    loader:
+        batch_size: 128
+        num_workers: 4
+    optimizer:
+        _target_: torch.optim.Adam
+        lr: 1e-5
+        betas: [0.9, 0.999]
+db:
+    log: True
+    project: edl_testing
+    name: back_to_roots_again
